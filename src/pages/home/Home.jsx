@@ -1,5 +1,5 @@
 import React from 'react';
-import Banner from '../../../src/assets/images/Banner2.png';
+import Banner from '../../../src/assets/images/banner2.png';
 import Arquitectura2 from '../../assets/images/Arqui2.jpg'
 import FondoNutricion from '../../assets/images/BannerN.jpg'
 import DVP from '../../assets/images/DVP.jpg'
