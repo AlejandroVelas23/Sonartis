@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
-  // Estado para controlar la visibilidad del menú
+  const { t } = useTranslation(); // Hook para traducciones
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Función para alternar la visibilidad del menú
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
@@ -20,7 +20,7 @@ const Header = () => {
             isActive ? 'underline text-cyan-500' : 'hover:underline text-white'
           }
         >
-          Development
+          {t('Header.NavLink1')} {/* Traducción dinámica */}
         </NavLink>
         <NavLink
           to="/architecture"
@@ -28,7 +28,7 @@ const Header = () => {
             isActive ? 'underline text-cyan-500' : 'hover:underline text-white'
           }
         >
-          Architecture
+          {t('Header.NavLink2')}
         </NavLink>
         <NavLink
           to="/nutrition"
@@ -36,7 +36,7 @@ const Header = () => {
             isActive ? 'underline text-cyan-500' : 'hover:underline text-white'
           }
         >
-          Nutrition
+          {t('Header.NavLink3')}
         </NavLink>
       </nav>
 
@@ -48,7 +48,7 @@ const Header = () => {
             isActive ? 'underline text-cyan-500' : 'hover:underline text-white'
           }
         >
-          Contact
+          {t('Header.NavLink4')}
         </NavLink>
       </div>
 
@@ -73,7 +73,7 @@ const Header = () => {
           }
           onClick={toggleMenu}
         >
-          Development
+          {t('Header.NavLink1')}
         </NavLink>
         <NavLink
           to="/architecture"
@@ -82,7 +82,7 @@ const Header = () => {
           }
           onClick={toggleMenu}
         >
-          Architecture
+          {t('Header.NavLink2')}
         </NavLink>
         <NavLink
           to="/nutrition"
@@ -91,16 +91,16 @@ const Header = () => {
           }
           onClick={toggleMenu}
         >
-          Nutrition
+          {t('Header.NavLink3')}
         </NavLink>
         <NavLink
           to="/contact"
           className={({ isActive }) =>
-            isActive ? 'underline text-cyan-500 text-xl' : 'hover:underline text-white text -xl'
+            isActive ? 'underline text-cyan-500 text-xl' : 'hover:underline text-white text-xl'
           }
           onClick={toggleMenu}
         >
-          Contact
+          {t('Header.NavLink4')}
         </NavLink>
       </nav>
     </header>
