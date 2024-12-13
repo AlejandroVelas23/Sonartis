@@ -1,15 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Contact from '../pages/contact/Contact';
-
+import Nutrition from '../pages/nutrition/nutrition';
+import Development from '@/pages/development/Development';
+import Architecture from '@/pages/architecture/Architecture';
+import Users from '@/pages/citas/users';
 const AppRoutes = () => (
-  <Router>
+  
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/development" element={<Development />} />
+      <Route path="/architecture" element={<Architecture />} />
+      <Route path="/nutrition" element={<Nutrition/>} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/users" element={<Users />} />
     </Routes>
-  </Router>
+  
 );
 
 export default AppRoutes;

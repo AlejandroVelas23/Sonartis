@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/home/Home';
-import Contact from './pages/contact/Contact';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import LanguageSwitcher from './components/LanguagueSwitcher';
+import AppRoutes from './routes/AppRoutes';
 const App = () => {
   return (
     <Router>
@@ -12,11 +11,7 @@ const App = () => {
         <Header></Header>
         <LanguageSwitcher />
         <main className="flex-1">
-          <Routes>
-          
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+          <AppRoutes/>
         </main>
         <Footer></Footer>
       </div>
