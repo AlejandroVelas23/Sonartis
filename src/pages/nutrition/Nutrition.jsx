@@ -48,7 +48,7 @@ return (
         <Button
           text="¡VER CITAS!"
           className="bg-white text-gray-950 hover:bg-cyan-900 hover:text-white"
-          onClick={() => navigate('/users')} // Navega a la página de citas
+          onClick={() => navigate('/login')} // Navega a la página de citas
         />
       </div>
     </div>

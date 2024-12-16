@@ -24,7 +24,9 @@ const resources = {
           NavLink1: "Development",
           NavLink2: "Architecture",
           NavLink3: "Nutrition",
-          NavLink4: "Contact"
+          NavLink4: "Contact",
+          NavLink5: "Us",
+          NavLink6: "Entrar"
 
         },
         Home: {
@@ -69,8 +71,10 @@ const resources = {
           NavLink1: "Desarrollo",
           NavLink2: "Arquitectura",
           NavLink3: "Nutrición",
-          NavLink4: "Contactanos"
-
+          NavLink4: "Contactanos",
+          NavLink5: "Nosotros",
+          NavLink6: "Login"
+          
         },
         Home: {
           bannerTitle: "Sonartis te ofrece múltiples soluciones",

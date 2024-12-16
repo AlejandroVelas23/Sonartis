@@ -5,7 +5,8 @@ import Contact from '../pages/contact/Contact';
 import Nutrition from '../pages/nutrition/Nutrition';
 import Development from '@/pages/development/Development';
 import Architecture from '@/pages/architecture/Architecture';
-import Users from '@/pages/citas/users';
+import Login from "@/pages/login/Login"
+
 const AppRoutes = () => (
   
     <Routes>
@@ -14,7 +15,7 @@ const AppRoutes = () => (
       <Route path="/architecture" element={<Architecture />} />
       <Route path="/nutrition" element={<Nutrition/>} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/users" element={<Users />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   
 );

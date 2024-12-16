@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguagueSwitcher';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -9,13 +10,13 @@ const Header = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="bg-gray-950 bg-opacity-90 text-white p-4 flex justify-between items-center z-20 text-cyan-500 relative">
-      <Link to="/" className="text-2xl font-bold ml-8 hover:text-cyan-400 transition-colors">
+    <header className="bg-gray-950 bg-opacity-90 text-white p-4 flex justify-between items-center z-20 text-cyan-500 relative font-bold text-lg">
+      <Link to="/" className="text-1xl font-bold ml-0 hover:text-cyan-400 transition-colors">
         Sonartis S.A de C.V
       </Link>
 
       {/* Menu for large screens */}
-      <nav className="hidden sm:flex flex-grow justify-center space-x-10 text-lg">
+      <nav className="hidden sm:flex flex-grow justify-center space-x-10 text-md">
         <NavLink
           to="/development"
           className={({ isActive }) =>
@@ -40,19 +41,29 @@ const Header = () => {
         >
           {t('Header.NavLink3')}
         </NavLink>
-      </nav>
-
-      {/* Contact button for large screens */}
-      <div className="hidden sm:block text-lg font-bold mr-8">
         <NavLink
           to="/contact"
           className={({ isActive }) =>
             isActive ? 'underline text-cyan-500' : 'hover:underline text-white hover:text-cyan-400 transition-colors'
           }
         >
-          {t('Header.NavLink4')}
+          {t('Header.NavLink5')}
         </NavLink>
-      </div>
+      </nav>
+
+      {/* Contact button for large screens */}
+      <div className="hidden sm:flex items-center space-x-4 font-bold">
+        
+  <NavLink
+    to="/login"
+    className={({ isActive }) =>
+      isActive ? 'underline text-cyan-500' : 'hover:underline text-white hover:text-cyan-400 transition-colors'
+    }
+  >
+    {t('Header.NavLink6')}
+  </NavLink>
+  <LanguageSwitcher />
+</div>
 
       {/* Hamburger icon for small screens */}
       <button
