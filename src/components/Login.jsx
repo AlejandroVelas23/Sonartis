@@ -10,43 +10,52 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(''); // Clear error when user types
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
-      if (isLogin) {
-        const response = await api.login({
-          email: formData.email,
-          password: formData.password
-        });
-        if (response.data) {
-          localStorage.setItem('token', response.data.token);
-          navigate('/appointments');
-        } else {
-          setError(response.error || 'Error al iniciar sesión');
-        }
+      const response = await api.login({
+        email: formData.email,
+        password: formData.password
+      });
+
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/appointments');
+      } else {
+        throw new Error('No se recibió el token de autenticación');
       }
     } catch (err) {
-      setError(err.message || 'Error al procesar la solicitud');
+      console.error('Login error:', err);
+      setError(err.message || 'Error al iniciar sesión. Por favor, intenta de nuevo.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleRegisterClick = () => {
-    setIsLogin(false); // Cambia al modo de registro
-    setIsRegisterModalOpen(true); // Abre el modal de registro
+    setIsLogin(false);
+    setIsRegisterModalOpen(true);
   };
 
   const handleModalClose = () => {
-    setIsRegisterModalOpen(false); // Cierra el modal
-    setIsLogin(true); // Asegura que volvemos a la vista de inicio de sesión
+    setIsRegisterModalOpen(false);
+    setIsLogin(true);
   };
 
   return (
@@ -65,6 +74,7 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={isLoading}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -77,41 +87,38 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              disabled={isLoading}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {error && <p className="text-red-600 text-sm">{error}</p>}
-          {isLogin && (
-            <button 
-              type="submit" 
-              className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
-            >
-              Iniciar Sesión
-            </button>
+          {error && (
+            <p className="text-red-600 text-sm text-center bg-red-50 p-2 rounded">
+              {error}
+            </p>
           )}
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+          </button>
         </form>
-        {isLogin ? (
-          <button 
-            onClick={handleRegisterClick} 
-            className="mt-4 text-blue-600 hover:underline"
-          >
-            ¿No tienes una cuenta? Regístrate
-          </button>
-        ) : (
-          <button 
-            onClick={() => setIsLogin(true)} 
-            className="mt-4 text-blue-600 hover:underline"
-          >
-            ¿Ya tienes una cuenta? Inicia sesión
-          </button>
-        )}
+        <button 
+          onClick={handleRegisterClick} 
+          disabled={isLoading}
+          className="mt-4 text-blue-600 hover:underline w-full text-center"
+        >
+          ¿No tienes una cuenta? Regístrate
+        </button>
       </div>
       <RegisterModal 
         isOpen={isRegisterModalOpen} 
-        onClose={handleModalClose} // Usa esta función para cerrar correctamente el modal
+        onClose={handleModalClose}
       />
     </div>
   );
 };
 
 export default Login;
+

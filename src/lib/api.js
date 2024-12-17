@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://backsonartis.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backsonartis.onrender.com/api";
 
 async function fetchApi(endpoint, options = {}) {
   try {
@@ -9,22 +9,28 @@ async function fetchApi(endpoint, options = {}) {
       ...(token && { Authorization: `Bearer ${token}` }),
     };
 
+    // Add credentials and mode to ensure CORS works properly
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
+      credentials: 'include',
+      mode: 'cors',
       headers: {
         ...defaultHeaders,
         ...options.headers,
       },
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      throw new Error(data.message || 'Error en la petición');
+      const errorData = await response.json().catch(() => ({
+        message: 'Error en la petición'
+      }));
+      throw new Error(errorData.message || 'Error en la petición');
     }
 
+    const data = await response.json();
     return { data };
   } catch (error) {
+    console.error('API Error:', error);
     return { error: error.message || 'Error desconocido' };
   }
 }
@@ -32,25 +38,10 @@ async function fetchApi(endpoint, options = {}) {
 export const api = {
   // Auth endpoints
   register: async (userData) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/users/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error en el registro');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error en el registro:', error);
-      throw error;
-    }
+    return fetchApi('/users/register', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
   },
 
   login: (credentials) =>
@@ -59,19 +50,13 @@ export const api = {
       body: JSON.stringify(credentials),
     }),
 
+  getProfile: () =>
+    fetchApi('/users/profile'),
+
   // Appointments endpoints
   getAppointments: () =>
     fetchApi('/users/appointments'),
-
-  // Nota: Estos endpoints no están en tu backend actual, pero los dejaremos
-  // comentados por si los implementas en el futuro
-  // getAvailableSlots: (date) =>
-  //   fetchApi(`/appointments/available?date=${date}`),
-
-  // createAppointment: (appointmentData) =>
-  //   fetchApi('/appointments', {
-  //     method: 'POST',
-  //     body: JSON.stringify(appointmentData),
-  //   }),
 };
+
+export default api;
 
