@@ -6,6 +6,7 @@ import Nutrition from '../pages/nutrition/Nutrition';
 import Development from '@/pages/development/Development';
 import Architecture from '@/pages/architecture/Architecture';
 import Login from "@/pages/login/Login"
+import Profile from '@/pages/profile/Profile';
 
 const AppRoutes = () => (
   
@@ -16,6 +17,7 @@ const AppRoutes = () => (
       <Route path="/nutrition" element={<Nutrition/>} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/profile" element={<Profile/>} />
     </Routes>
   
 );

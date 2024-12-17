@@ -47,7 +47,7 @@ const Login = () => {
 
       if (response.data?.token) {
         localStorage.setItem('token', response.data.token);
-        navigate('/appointments');
+        navigate('/profile');
       } else {
         throw new Error('No se recibió el token de autenticación');
       }
