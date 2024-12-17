@@ -25,9 +25,20 @@ const Login = () => {
     setIsLoading(true);
 
     try {
+      console.log('Submitting login form:', {
+        email: formData.email,
+        timestamp: new Date().toISOString()
+      });
+
       const response = await api.login({
         email: formData.email,
         password: formData.password
+      });
+
+      console.log('Login response:', {
+        success: !response.error,
+        hasToken: !!response.data?.token,
+        timestamp: new Date().toISOString()
       });
 
       if (response.error) {
@@ -41,8 +52,17 @@ const Login = () => {
         throw new Error('No se recibió el token de autenticación');
       }
     } catch (err) {
-      console.error('Login error:', err);
-      setError(err.message || 'Error al iniciar sesión. Por favor, intenta de nuevo.');
+      console.error('Login error:', {
+        message: err.message,
+        stack: err.stack,
+        timestamp: new Date().toISOString()
+      });
+      
+      setError(
+        err.message === 'Invalid credentials' 
+          ? 'Email o contraseña incorrectos'
+          : 'Error al iniciar sesión. Por favor, intenta de nuevo más tarde.'
+      );
     } finally {
       setIsLoading(false);
     }

@@ -9,7 +9,12 @@ async function fetchApi(endpoint, options = {}) {
       ...(token && { Authorization: `Bearer ${token}` }),
     };
 
-    // Add credentials and mode to ensure CORS works properly
+    console.log('Making API request:', {
+      url: `${API_BASE_URL}${endpoint}`,
+      method: options.method || 'GET',
+      headers: defaultHeaders
+    });
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       credentials: 'include',
@@ -20,35 +25,57 @@ async function fetchApi(endpoint, options = {}) {
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({
-        message: 'Error en la petición'
-      }));
-      throw new Error(errorData.message || 'Error en la petición');
+    const contentType = response.headers.get('content-type');
+    let data;
+    
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      console.error('Unexpected response format:', {
+        status: response.status,
+        contentType,
+        body: text
+      });
+      throw new Error('Formato de respuesta inesperado del servidor');
     }
 
-    const data = await response.json();
+    if (!response.ok) {
+      console.error('API Error Response:', {
+        status: response.status,
+        data
+      });
+      throw new Error(data.message || 'Error en la petición');
+    }
+
     return { data };
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('API Request Failed:', {
+      error: error.message,
+      stack: error.stack
+    });
     return { error: error.message || 'Error desconocido' };
   }
 }
 
 export const api = {
-  // Auth endpoints
+  login: async (credentials) => {
+    console.log('Attempting login with:', {
+      email: credentials.email,
+      timestamp: new Date().toISOString()
+    });
+
+    return fetchApi('/users/login', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
+  },
   register: async (userData) => {
     return fetchApi('/users/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
   },
-
-  login: (credentials) =>
-    fetchApi('/users/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    }),
 
   getProfile: () =>
     fetchApi('/users/profile'),
