@@ -14,20 +14,29 @@ export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log('AuthProvider: Checking for token');
     const token = localStorage.getItem('token');
     if (token) {
+      console.log('AuthProvider: Token found, checking auth');
       checkAuth();
     } else {
+      console.log('AuthProvider: No token found');
       setIsLoading(false);
     }
   }, []);
 
   const checkAuth = async () => {
     try {
+      console.log('AuthProvider: Fetching user profile');
       const response = await api.getProfile();
       if (response.data) {
+        console.log('AuthProvider: User profile fetched', response.data);
         setUser(response.data);
+      } else {
+        console.log('AuthProvider: No user data in response');
       }
+    } catch (error) {
+      console.error('AuthProvider: Error fetching user profile', error);
     } finally {
       setIsLoading(false);
     }

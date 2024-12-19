@@ -5,6 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useAuth } from '../../lib/hooks/useAuth';
 import { api } from '../../lib/api';
 
+console.log("entré a dates1")
 // Simulación de nutricionistas disponibles
 const nutritionists = [
   { id: 1, name: "Dr. Ana García" },
@@ -16,6 +17,7 @@ const nutritionists = [
 const isDateAvailable = (date) => true;
 
 const Dates = () => {
+    console.log("entré a dates2")
   const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [formData, setFormData] = useState({
@@ -27,14 +29,18 @@ const Dates = () => {
   });
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      navigate('/login');
-    } else if (user) {
-      setFormData(prevState => ({
-        ...prevState,
-        clientName: `${user.first_name} ${user.last_name}`,
-        clientEmail: user.email
-      }));
+    if (!isLoading) {
+      if (!user) {
+        console.log('No user found, redirecting to login');
+        navigate('/login');
+      } else {
+        console.log('User found:', user);
+        setFormData(prevState => ({
+          ...prevState,
+          clientName: `${user.first_name} ${user.last_name}`,
+          clientEmail: user.email
+        }));
+      }
     }
   }, [user, isLoading, navigate]);
 
@@ -55,12 +61,9 @@ const Dates = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Datos del formulario:', formData);
-    // Aquí normalmente enviarías los datos al backend
     try {
       const response = await api.getAppointments();
       console.log('Citas:', response.data);
-      // Implementar lógica para proceder con el pago
-      // Por ahora, solo mostraremos un mensaje
       alert('Procediendo con el pago...');
     } catch (error) {
       console.error('Error al obtener citas:', error);
@@ -72,7 +75,7 @@ const Dates = () => {
   }
 
   if (!user) {
-    return null; // No renderizar nada si el usuario no está autenticado
+    return null;
   }
 
   return (
