@@ -13,7 +13,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`absolute top-full right-0 w-64 sm:w-96 bg-white shadow-lg transform transition-all duration-300 ease-in-out z-50 ${
+      className={`ml-24 absolute top-full right-0 w-64 sm:w-96 bg-white shadow-lg transform transition-all duration-300 ease-in-out z-0 ${
         isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1 pointer-events-none'
       }`}
     >
