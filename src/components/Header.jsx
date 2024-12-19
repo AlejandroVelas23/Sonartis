@@ -58,7 +58,7 @@ const Header = () => {
         {user ? (
           <>
             <span className="text-white hover:text-cyan-400 transition-colors">
-              {user.name || user.email}
+              {user.first_name || user.email}
             </span>
             <button
               onClick={logout}

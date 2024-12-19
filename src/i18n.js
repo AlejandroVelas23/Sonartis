@@ -26,7 +26,8 @@ const resources = {
           NavLink3: "Nutrition",
           NavLink4: "Contact",
           NavLink5: "Us",
-          NavLink6: "Entrar"
+          NavLink6: "Login",
+          LogOut: "LogOut",
 
         },
         Home: {
@@ -73,7 +74,8 @@ const resources = {
           NavLink3: "Nutrición",
           NavLink4: "Contactanos",
           NavLink5: "Nosotros",
-          NavLink6: "Login"
+          NavLink6: "Entrar",
+          LogOut: "Salir"
           
         },
         Home: {
