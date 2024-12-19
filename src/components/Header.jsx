@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguagueSwitcher';
-import { useAuth } from '../lib/hooks/useAuth'; // Importamos el hook useAuth
+import { useAuth } from '../lib/hooks/useAuth';
 
 const Header = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, logout } = useAuth(); // Utilizamos el hook useAuth para obtener el usuario y la función de logout
+  const { user, logout } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -134,7 +134,7 @@ const Header = () => {
         {user ? (
           <>
             <span className="text-white hover:text-cyan-400 transition-colors text-xl">
-              {user.name || user.email}
+              {user.first_name || user.email}
             </span>
             <button
               onClick={() => {

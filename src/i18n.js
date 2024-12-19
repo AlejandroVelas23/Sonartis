@@ -27,7 +27,7 @@ const resources = {
           NavLink4: "Contact",
           NavLink5: "Us",
           NavLink6: "Login",
-          LogOut: "LogOut",
+          Logout: "Logout",
 
         },
         Home: {
@@ -75,7 +75,7 @@ const resources = {
           NavLink4: "Contactanos",
           NavLink5: "Nosotros",
           NavLink6: "Entrar",
-          LogOut: "Salir"
+          Logout: "Salir"
           
         },
         Home: {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../lib/api';
+import { useAuth } from '../lib/hooks/useAuth'; // Import useAuth
 import RegisterModal from './RegisterModal';
 
 const Login = () => {
@@ -13,10 +13,11 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth(); // Use the login function from AuthContext
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(''); // Clear error when user types
+    setError('');
   };
 
   const handleSubmit = async (e) => {
@@ -25,32 +26,8 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      console.log('Submitting login form:', {
-        email: formData.email,
-        timestamp: new Date().toISOString()
-      });
-
-      const response = await api.login({
-        email: formData.email,
-        password: formData.password
-      });
-
-      console.log('Login response:', {
-        success: !response.error,
-        hasToken: !!response.data?.token,
-        timestamp: new Date().toISOString()
-      });
-
-      if (response.error) {
-        throw new Error(response.error);
-      }
-
-      if (response.data?.token) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/profile');
-      } else {
-        throw new Error('No se recibió el token de autenticación');
-      }
+      await login(formData.email, formData.password); // Use the login function from AuthContext
+      navigate('/profile');
     } catch (err) {
       console.error('Login error:', {
         message: err.message,

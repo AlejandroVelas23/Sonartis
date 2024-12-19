@@ -1,6 +1,5 @@
-// This file contains the AuthContext, AuthProvider, and useAuth hook for managing authentication state
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { api } from '../api'; // Updated import path
+import { api } from '../api';
 
 const AuthContext = createContext({
   user: null,
@@ -29,7 +28,7 @@ export function AuthProvider({ children }) {
     try {
       console.log('AuthProvider: Fetching user profile');
       const response = await api.getProfile();
-      console.log('AuthProvider: Response received', response.data);  // Verifica si hay datos en la respuesta
+      console.log('AuthProvider: Response received', response.data);
       if (response.data) {
         setUser(response.data);
       } else {
@@ -70,7 +69,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Custom hook to use the AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
