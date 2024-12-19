@@ -19,7 +19,7 @@ const AppRoutes = () => (
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile/>} />
-      <Route path="dates" element={<AppointmentForm/>} />
+      <Route path="/dates" element={<AppointmentForm/>} />
     </Routes>
   
 );
