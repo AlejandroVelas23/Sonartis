@@ -12,11 +12,11 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+      className={`fixed top-[20px] right-0 w-full h-1/2 sm:w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
-      <div className="mt-20 flex flex-col h-64">
+      <div className="flex flex-col h-full">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-semibold text-gray-800">Profile</h2>
           <button
