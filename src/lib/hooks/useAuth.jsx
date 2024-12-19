@@ -29,8 +29,8 @@ export function AuthProvider({ children }) {
     try {
       console.log('AuthProvider: Fetching user profile');
       const response = await api.getProfile();
+      console.log('AuthProvider: Response received', response.data);  // Verifica si hay datos en la respuesta
       if (response.data) {
-        console.log('AuthProvider: User profile fetched', response.data);
         setUser(response.data);
       } else {
         console.log('AuthProvider: No user data in response');
@@ -39,6 +39,7 @@ export function AuthProvider({ children }) {
       console.error('AuthProvider: Error fetching user profile', error);
     } finally {
       setIsLoading(false);
+      console.log('AuthProvider: Finished loading');
     }
   };
 
