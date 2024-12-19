@@ -161,7 +161,9 @@ const Header = () => {
             >
               {user.first_name || user.email}
             </button>
-            <ProfileModal isOpen={isProfileModalOpen} onClose={toggleProfileModal} />
+            <div className="absolute right-0 w-full sm:w-96">
+              <ProfileModal isOpen={isProfileModalOpen} onClose={toggleProfileModal} />
+            </div>
           </div>
         ) : (
           <NavLink
