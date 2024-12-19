@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguagueSwitcher';
+import { useAuth } from '../lib/hooks/useAuth'; // Importamos el hook useAuth
 
 const Header = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout } = useAuth(); // Utilizamos el hook useAuth para obtener el usuario y la función de logout
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -53,17 +55,30 @@ const Header = () => {
 
       {/* Contact button for large screens */}
       <div className="hidden sm:flex items-center space-x-4 font-bold">
-        
-  <NavLink
-    to="/login"
-    className={({ isActive }) =>
-      isActive ? 'underline text-cyan-500' : 'hover:underline text-white hover:text-cyan-400 transition-colors'
-    }
-  >
-    {t('Header.NavLink6')}
-  </NavLink>
-  <LanguageSwitcher />
-</div>
+        {user ? (
+          <>
+            <span className="text-white hover:text-cyan-400 transition-colors">
+              {user.name || user.email}
+            </span>
+            <button
+              onClick={logout}
+              className="hover:underline text-white hover:text-cyan-400 transition-colors"
+            >
+              {t('Header.Logout')}
+            </button>
+          </>
+        ) : (
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive ? 'underline text-cyan-500' : 'hover:underline text-white hover:text-cyan-400 transition-colors'
+            }
+          >
+            {t('Header.NavLink6')}
+          </NavLink>
+        )}
+        <LanguageSwitcher />
+      </div>
 
       {/* Hamburger icon for small screens */}
       <button
@@ -116,6 +131,32 @@ const Header = () => {
         >
           {t('Header.NavLink4')}
         </NavLink>
+        {user ? (
+          <>
+            <span className="text-white hover:text-cyan-400 transition-colors text-xl">
+              {user.name || user.email}
+            </span>
+            <button
+              onClick={() => {
+                logout();
+                toggleMenu();
+              }}
+              className="hover:underline text-white hover:text-cyan-400 transition-colors text-xl"
+            >
+              {t('Header.Logout')}
+            </button>
+          </>
+        ) : (
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive ? 'underline text-cyan-500 text-xl' : 'hover:underline text-white hover:text-cyan-400 transition-colors text-xl'
+            }
+            onClick={toggleMenu}
+          >
+            {t('Header.NavLink6')}
+          </NavLink>
+        )}
       </nav>
     </header>
   );
