@@ -16,7 +16,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
-      <div className="flex flex-col h-full">
+      <div className="mt-20 flex flex-col h-64">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-semibold text-gray-800">Profile</h2>
           <button
@@ -31,7 +31,11 @@ const ProfileModal = ({ isOpen, onClose }) => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Name</label>
-              <p className="mt-1 text-lg text-gray-900">{user?.first_name} {user?.last_name}</p>
+              <p className="mt-1 text-lg text-gray-900">{user?.first_name}</p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Last Name</label>
+              <p className="mt-1 text-lg text-gray-900">{user?.last_name}</p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Email</label>
