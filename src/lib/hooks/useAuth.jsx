@@ -1,7 +1,13 @@
+// This file contains the AuthContext, AuthProvider, and useAuth hook for managing authentication state
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { api } from '../api';
+import { api } from '../api'; // Updated import path
 
-const AuthContext = createContext(null);
+const AuthContext = createContext({
+  user: null,
+  login: async (email, password) => {},
+  logout: () => {},
+  isLoading: true
+});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -28,12 +34,17 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => {
-    const response = await api.login({ email, password });
-    if (response.data?.token) {
-      localStorage.setItem('token', response.data.token);
-      setUser(response.data.user);
-    } else {
-      throw new Error(response.error || 'Error al iniciar sesión');
+    try {
+      const response = await api.login({ email, password });
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token);
+        setUser(response.data.user);
+      } else {
+        throw new Error(response.error || 'Error al iniciar sesión');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
     }
   };
 
@@ -49,6 +60,7 @@ export function AuthProvider({ children }) {
   );
 }
 
+// Custom hook to use the AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

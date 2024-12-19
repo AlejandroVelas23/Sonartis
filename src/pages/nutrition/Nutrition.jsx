@@ -44,11 +44,15 @@ return (
         <p className="text-white text-center mb-6 ">
           Agenda una cita con nosotros y da el primer paso hacia una vida más saludable.
         </p>
-        <Button text="¡AGENDA TU CITA!" className="bg-white text-gray-950 hover:bg-cyan-900 hover:text-white"/>
+        <Button 
+        text="¡AGENDA TU CITA!" 
+        className="bg-white text-gray-950 hover:bg-cyan-900 hover:text-white"
+        onClick={() => navigate('/dates')}
+        />
         <Button
           text="¡VER CITAS!"
           className="bg-white text-gray-950 hover:bg-cyan-900 hover:text-white"
-          onClick={() => navigate('/login')} // Navega a la página de citas
+          onClick={() => navigate('/dates')} // Navega a la página de citas
         />
       </div>
     </div>

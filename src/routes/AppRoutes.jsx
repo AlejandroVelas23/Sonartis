@@ -7,6 +7,7 @@ import Development from '@/pages/development/Development';
 import Architecture from '@/pages/architecture/Architecture';
 import Login from "@/pages/login/Login"
 import Profile from '@/pages/profile/Profile';
+import AppointmentForm from '@/pages/nutrition/Dates';
 
 const AppRoutes = () => (
   
@@ -18,6 +19,7 @@ const AppRoutes = () => (
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile/>} />
+      <Route path="dates" element={<AppointmentForm/>} />
     </Routes>
   
 );

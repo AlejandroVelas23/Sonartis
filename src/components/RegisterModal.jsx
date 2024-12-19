@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../lib/api';
 
 // Basic Button component
@@ -10,6 +11,10 @@ const Button = ({ children, ...props }) => (
     {children}
   </button>
 );
+Button.propTypes = {
+  children: PropTypes.node.isRequired, // Valida que children sea un nodo React
+  className: PropTypes.string,
+};
 
 // Basic Input component
 const Input = (props) => (
@@ -18,6 +23,9 @@ const Input = (props) => (
     className={`w-full px-3 py-2 border border-gray-300 rounded-md ${props.className || ''}`}
   />
 );
+Input.propTypes = {
+  className: PropTypes.string,
+};
 
 // Basic Label component
 const Label = ({ children, ...props }) => (
@@ -25,6 +33,11 @@ const Label = ({ children, ...props }) => (
     {children}
   </label>
 );
+
+Label.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
 
 // Basic Dialog component
 const Dialog = ({ children, onClose }) => (
@@ -35,6 +48,11 @@ const Dialog = ({ children, onClose }) => (
     </div>
   </div>
 );
+
+Dialog.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired, // Valida que onClose sea una función
+};
 
 const RegisterModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
