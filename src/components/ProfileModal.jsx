@@ -13,12 +13,12 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed top-16 right-0 w-2/3 h-1/2 sm:w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+      className={`absolute top-full right-0 w-2/3 sm:w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
-      <div className="flex flex-col h-full">
-        <div className="flex justify-between items-center p-6 border-b">
+      <div className="flex flex-col max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
           <h2 className="text-2xl font-semibold text-gray-800">Profile</h2>
           <button
             onClick={onClose}
@@ -28,7 +28,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
             <X size={24} />
           </button>
         </div>
-        <div className="flex-grow p-6 overflow-y-auto">
+        <div className="flex-grow p-6">
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Name</label>
@@ -45,12 +45,11 @@ const ProfileModal = ({ isOpen, onClose }) => {
             {/* Add more user data fields here as needed */}
           </div>
         </div>
-        <div className="p-6 border-t">
-            <Button
+        <div className="p-6 border-t sticky bottom-0 bg-white">
+          <Button
             text='Logout'
             onClick={handleLogout}
-            >
-            </Button>
+          />
         </div>
       </div>
     </div>
