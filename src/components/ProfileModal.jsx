@@ -1,6 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import { useAuth } from '../lib/hooks/useAuth';
+import Button from './Button';
 
 const ProfileModal = ({ isOpen, onClose }) => {
   const { user, logout } = useAuth();
@@ -12,7 +13,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed top-[20px] right-0 w-full h-1/2 sm:w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+      className={`fixed top-20 right-0 w-full h-1/2 sm:w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
@@ -45,12 +46,11 @@ const ProfileModal = ({ isOpen, onClose }) => {
           </div>
         </div>
         <div className="p-6 border-t">
-          <button
+            <Button
+            text='Logout'
             onClick={handleLogout}
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-          >
-            Logout
-          </button>
+            >
+            </Button>
         </div>
       </div>
     </div>
