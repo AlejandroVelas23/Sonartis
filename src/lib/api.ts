@@ -87,11 +87,6 @@ async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise
 
 export const api = {
   login: async (credentials: Credentials): Promise<ApiResponse<{ token: string; user: UserData }>> => {
-    console.log('Attempting login with:', {
-      email: credentials.email,
-      timestamp: new Date().toISOString()
-    });
-
     return fetchApi('/users/login', {
       method: 'POST',
       body: JSON.stringify(credentials),

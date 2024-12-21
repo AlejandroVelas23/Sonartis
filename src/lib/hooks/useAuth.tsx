@@ -40,19 +40,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const checkAuth = async () => {
     try {
-      console.log('AuthProvider: Fetching user profile');
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+      
       const response = await api.getProfile();
-      console.log('AuthProvider: Response received', response.data);
       if (response.data) {
         setUser(response.data);
       } else {
-        console.log('AuthProvider: No user data in response');
+        localStorage.removeItem('token');
       }
     } catch (error) {
-      console.error('AuthProvider: Error fetching user profile', error);
+      console.error('Error checking auth:', error);
+      localStorage.removeItem('token');
     } finally {
       setIsLoading(false);
-      console.log('AuthProvider: Finished loading');
     }
   };
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import Input from './Input';
 import Button from './Button';
+import { api } from '../lib/api';
 
 interface RegisterData {
   first_name: string;
@@ -55,27 +56,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
+  
     if (!validateForm()) return;
-
+  
     setIsLoading(true);
     try {
-      const response = await fetch('https://sonartis-pj00h6dek-alejandrovelas-projects.vercel.app/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(registerData),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Registration failed:', response.status, response.statusText, errorData);
-        throw new Error(`Registration failed: ${response.status} ${response.statusText}`);
+      const response = await api.register(registerData);
+      if (response.error) {
+        throw new Error(response.error);
       }
-  
-      const data = await response.json();
-      console.log('Registration successful:', data);
+      console.log('Registration successful:', response.data);
       onClose();
     } catch (error) {
       console.error('Error registering:', error);
