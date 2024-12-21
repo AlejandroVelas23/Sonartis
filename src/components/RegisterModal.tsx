@@ -31,6 +31,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
     phone: '',
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!show) return null;
 
@@ -39,11 +40,26 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
     setRegisterData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const validateForm = () => {
+    if (!registerData.first_name || !registerData.last_name || !registerData.email || !registerData.password) {
+      setError(t('register.requiredFields'));
+      return false;
+    }
+    if (registerData.age && isNaN(Number(registerData.age))) {
+      setError(t('register.invalidAge'));
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí va la lógica para manejar el registro
+    setError('');
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
     try {
-      // Simulación de registro
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -51,13 +67,18 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
         },
         body: JSON.stringify(registerData),
       });
+      
       if (!response.ok) {
-        throw new Error('Registration failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
       }
+      
       onClose();
     } catch (error) {
       console.error('Error registering:', error);
-      setError(t('register.error'));
+      setError(error instanceof Error ? error.message : t('register.error'));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,6 +93,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          aria-label={t('register.close')}
         >
           &times;
         </button>
@@ -82,6 +104,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
             value={registerData.first_name}
             onChange={handleChange}
             placeholder={`${t('register.first_name')} *`}
+            required
+            aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Input
@@ -96,13 +120,18 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
             value={registerData.last_name}
             onChange={handleChange}
             placeholder={`${t('register.last_name')} *`}
+            required
+            aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Input
             name="email"
+            type="email"
             value={registerData.email}
             onChange={handleChange}
             placeholder={`${t('register.email')} *`}
+            required
+            aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Input
@@ -111,25 +140,35 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
             value={registerData.password}
             onChange={handleChange}
             placeholder={`${t('register.password')} *`}
+            required
+            aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Input
             name="age"
+            type="number"
             value={registerData.age}
             onChange={handleChange}
             placeholder={t('register.age')}
+            min="0"
+            max="120"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Input
             name="phone"
+            type="tel"
             value={registerData.phone}
             onChange={handleChange}
             placeholder={t('register.phone')}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {error && <p className="text-red-500">{error}</p>}
-          <Button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
-            {t('register.submit')}
+          {error && <p className="text-red-500" role="alert">{error}</p>}
+          <Button 
+            type="submit" 
+            disabled={isLoading}
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 disabled:opacity-50"
+          >
+            {isLoading ? t('register.submitting') : t('register.submit')}
           </Button>
         </form>
       </motion.div>
@@ -138,3 +177,4 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
 };
 
 export default RegisterModal;
+
