@@ -7,17 +7,17 @@ export function cn(...inputs: ClassValue[]) {
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backsonartis.onrender.com/api";
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   data?: T;
   error?: string;
 }
 
-interface Credentials {
+export interface Credentials {
   email: string;
   password: string;
 }
 
-interface UserData {
+export interface UserData {
   id: number;
   email: string;
   first_name: string;
@@ -30,7 +30,7 @@ interface UserData {
   updated_at?: string;
 }
 
-interface RegisterUserData {
+export interface RegisterUserData {
   first_name: string;
   middle_name?: string;
   last_name: string;
@@ -121,6 +121,5 @@ export const api = {
   },
 };
 
-export type { UserData, RegisterUserData, ApiResponse, Credentials };
 export default api;
 

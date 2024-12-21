@@ -1,13 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { api } from '../api';
+import { api, UserData } from '../api';
 
-interface User {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  // Add other user properties as needed
-}
+// Actualizamos la interfaz User para que coincida con UserData
+type User = UserData;
 
 interface AuthContextType {
   user: User | null;
