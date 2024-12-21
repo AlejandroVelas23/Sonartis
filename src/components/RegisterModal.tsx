@@ -60,19 +60,23 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/register', {
+      // Change the fetch URL to match your backend route
+      const response = await fetch('/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(registerData),
       });
-      
+    
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Registration failed:', response.status, response.statusText, errorData);
+        throw new Error(`Registration failed: ${response.status} ${response.statusText}`);
       }
-      
+    
+      const data = await response.json();
+      console.log('Registration successful:', data);
       onClose();
     } catch (error) {
       console.error('Error registering:', error);
