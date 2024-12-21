@@ -60,21 +60,20 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ show, onClose }) => {
 
     setIsLoading(true);
     try {
-      // Change the fetch URL to match your backend route
-      const response = await fetch('/register', {
+      const response = await fetch('https://sonartis-pj00h6dek-alejandrovelas-projects.vercel.app/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(registerData),
       });
-    
+  
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         console.error('Registration failed:', response.status, response.statusText, errorData);
         throw new Error(`Registration failed: ${response.status} ${response.statusText}`);
       }
-    
+  
       const data = await response.json();
       console.log('Registration successful:', data);
       onClose();
