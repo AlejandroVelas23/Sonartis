@@ -18,11 +18,26 @@ interface Credentials {
 }
 
 interface UserData {
-  id: string;
+  id: number;
   email: string;
   first_name: string;
   last_name: string;
-  // Add other user properties as needed
+  middle_name?: string;
+  age?: number;
+  phone?: string;
+  role?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface RegisterUserData {
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  email: string;
+  password: string;
+  age?: string;
+  phone?: string;
 }
 
 async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
@@ -82,19 +97,30 @@ export const api = {
       body: JSON.stringify(credentials),
     });
   },
-  register: async (userData: Partial<UserData>): Promise<ApiResponse<UserData>> => {
-    return fetchApi('/users/register', {
+
+  register: async (userData: RegisterUserData): Promise<ApiResponse<{ token: string; user: UserData }>> => {
+    return fetchApi('/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
   },
 
-  getProfile: (): Promise<ApiResponse<UserData>> =>
-    fetchApi('/users/profile'),
+  getProfile: async (): Promise<ApiResponse<UserData>> => {
+    return fetchApi('/profile');
+  },
 
-  getAppointments: (): Promise<ApiResponse<any[]>> =>
-    fetchApi('/users/appointments'),
+  updateProfile: async (userData: Partial<UserData>): Promise<ApiResponse<UserData>> => {
+    return fetchApi('/profile', {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+    });
+  },
+
+  getAppointments: async (): Promise<ApiResponse<any[]>> => {
+    return fetchApi('/appointments');
+  },
 };
 
+export type { UserData, RegisterUserData, ApiResponse, Credentials };
 export default api;
 
