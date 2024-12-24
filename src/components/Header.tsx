@@ -74,6 +74,7 @@ const Header: React.FC = () => {
       </nav>
 
       {/* Contact button for large screens */}
+      {/*
       <div className="hidden sm:flex items-center space-x-4 font-bold">
         {user ? (
           <div className="relative">
@@ -90,8 +91,8 @@ const Header: React.FC = () => {
             {t('Header.NavLink6')}
           </NavLink>
         )}
-        <LanguageSwitcher />
-      </div>
+        
+      </div>*/}<LanguageSwitcher />
 
       {/* Hamburger icon for small screens */}
       <button
@@ -144,6 +145,7 @@ const Header: React.FC = () => {
         >
           {t('Header.NavLink4')}
         </NavLink>
+        {/*
         {user ? (
           <div className="relative w-full text-center">
             <button onClick={toggleProfileModal}>Open Profile Modal (Small Screen)</button>
@@ -159,7 +161,7 @@ const Header: React.FC = () => {
           >
             {t('Header.NavLink6')}
           </NavLink>
-        )}
+        )} */}
       </nav>
     </header>
   );

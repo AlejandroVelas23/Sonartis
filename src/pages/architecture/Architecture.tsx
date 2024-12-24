@@ -2,7 +2,7 @@ import React from "react";
 import Banner from "../../components/Banner";
 import ServiceCard from "../../components/ServiceCard";
 import { FaFileSignature } from "react-icons/fa";
-import OA2 from '../../assets/images/OA2.jpg'
+import OA2 from '../../assets/images/OA2.jpg';
 import Button from "../../components/Button";
 import { GiTreeDoor } from "react-icons/gi";
 import { BiSolidBuildingHouse } from "react-icons/bi";
@@ -10,59 +10,68 @@ import { SiRenovate } from "react-icons/si";
 import { MdEnergySavingsLeaf } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
-
 const Architecture: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-100 to-blue-50 pb-12">
-      <Banner 
+    <div className="min-h-screen bg-gradient-to-t from-gray-200 to-cyan-600 pb-12">
+      {/* Banner */}
+      <Banner
         backgroundImage={OA2}
-        text="Construimos sueños ayudando al planeta"
+        text={t('Architecture.bannerText')}
       />
-      <div className="text-center text-white text-3xl font-bold mt-8">
-        <h1 className="text-black">Servicios </h1>
+
+      {/* Título */}
+      <div className="text-center text-white text-3xl font-bold mt-8 mb-12">
+        <h1>{t('Architecture.servicesTitle')}</h1>
       </div>
-      <div className="p-6 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-justify">
+
+      {/* Tarjetas de servicios */}
+      <div className="p-6 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        
         <ServiceCard
-          title="Diseño Arquitectónico Sostenible"
-          description="Utilizamos materiales eco-amigables y tecnologías avanzadas para minimizar el impacto ambiental, asegurando que cada proyecto no solo cumpla con tus necesidades, sino que también respete y proteja nuestro planeta"
-          icon={GiTreeDoor}
-        />
-        <ServiceCard
-          title="Planeación Urbana y Paisajismo"
-          description="Nuestro equipo de expertos en planeación urbana y paisajismo se dedica a transformar espacios exteriores en entornos vibrantes y funcionales. Diseñamos soluciones innovadoras que mejoran la calidad de vida de las comunidades, integrando elementos naturales y sostenibles que fomentan la biodiversidad y la belleza natural"
+          title={t('Architecture.sustainableTitle')}
+          description={t('Architecture.sustainableDescription')}
           icon={BiSolidBuildingHouse}
         />
         <ServiceCard
-          title="Remodelación y Renovación"
-          description="Ya sea que desees renovar un espacio existente o actualizar una estructura antigua, nuestros servicios de remodelación y renovación se adaptan a tus necesidades específicas. Te ayudamos a revitalizar tu propiedad con diseños modernos y eficientes, asegurando que cada proyecto se realice con la máxima calidad y atención al detalle."
+          title={t('Architecture.interiorTitle')}
+          description={t('Architecture.interiorDescription')}
           icon={SiRenovate}
         />
         <ServiceCard
-          title="Gestión de Proyectos"
-          description="Coordinamos todos los aspectos del proceso constructivo para garantizar que tu proyecto se realice a tiempo, dentro del presupuesto y con los más altos estándares de calidad."
-          icon={FaFileSignature}
+          title={t('Architecture.landscapingTitle')}
+          description={t('Architecture.landscapingDescription')}
+          icon={MdEnergySavingsLeaf}
+        /> 
+        <ServiceCard
+          title={t('Architecture.consultingTitle')}
+          description={t('Architecture.consultingDescription')}
+          icon={GiTreeDoor}
         />
         <ServiceCard
-          title="Consultoría en Eficiencia Energética"
-          description="Ofrecemos consultoría en eficiencia energética para proyectos nuevos y existentes. Nuestro objetivo es reducir el consumo de energía y los costos operativos mediante la implementación de soluciones innovadoras y sostenibles, como sistemas de energía renovable y aislamiento de alta eficiencia"
-          icon={MdEnergySavingsLeaf}
+          title={t('Architecture.proyectTitle')}
+          description={t('Architecture.proyectDescription')}
+          icon={FaFileSignature}
         />
       </div>
-      <div className="flex flex-col items-center justify-center mt-8 py-10 bg-gradient-to-r from-cyan-600 to-teal-500 rounded-lg shadow-lg mx-6 lg:mx-20">
+
+      {/* Llamado a la acción */}
+      <div className="flex flex-col items-center justify-center mt-16 py-10 bg-gradient-to-r from-cyan-600 to-teal-500 rounded-lg shadow-lg mx-6 lg:mx-20">
         <h2 className="text-white text-3xl font-bold text-center mb-4">
-          ¿Listo para cumplir tu sueño?
+          {t('Architecture.ctaTitle')}
         </h2>
-        <p className="text-white text-center mb-6 ">
-          ¡Cotiza tu proyecto o planteanos tu problema!
+        <p className="text-white text-center mb-6 max-w-2xl">
+          {t('Architecture.ctaDescription')}
         </p>
-        <Button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
-            {t('Architecture.submit')}
-          </Button>
+        <Button
+          type="submit"
+          className="w-full max-w-md bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-300"
+        >
+          {t('Architecture.ctaButton')}
+        </Button>
       </div>
     </div>
   );
-}
+};
 
 export default Architecture;
-
