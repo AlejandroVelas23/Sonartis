@@ -6,7 +6,7 @@ import DVP from '../../assets/images/DVP.jpg';
 import Button from '../../components/Button';
 import TestimonialCard from '../../components/TestimonialCard';
 import { useTranslation } from 'react-i18next';
-import Nutriologa from '../../assets/images/Nutriologa.jpg';
+// import Nutriologa from '../../assets/images/Nutriologa.jpg';
 import Cliente1 from '../../assets/images/Cliente1.jpg';
 import Cliente2 from '../../assets/images/Cliente2.jpg';
 import Cliente3 from '../../assets/images/Cliente3.jpg';

@@ -3,14 +3,14 @@ import Banner from "../../components/Banner";
 import ServiceCard from "../../components/ServiceCard";
 import { FaCalendarAlt, FaFileSignature } from "react-icons/fa";
 import Bn from '../../assets/images/BN.jpg'
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import { GiFruitBowl } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
 const Nutrition: React.FC = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-t from-gray-950 to-emerald-900 pb-12">
       <Banner 

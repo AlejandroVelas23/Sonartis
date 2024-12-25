@@ -22,21 +22,44 @@ const Contact: React.FC = () => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(t("form.successMessage"));
-    setFormData({
-      name: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert(t("form.successMessage"));
+        setFormData({
+          name: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        alert(t("form.errorMessage"));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(t("form.errorMessage"));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,7 +153,9 @@ const Contact: React.FC = () => {
             ></textarea>
           </div>
 
-          <Btt type="submit" text={t("form.submit")} className="w-full" />
+          <Btt type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? t('enviando') : t('enviar')}
+          </Btt>
         </form>
       </div>
 
@@ -146,4 +171,3 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
-

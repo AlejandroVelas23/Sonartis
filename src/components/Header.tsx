@@ -1,35 +1,35 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguagueSwitcher';
-import { useAuth } from '../lib/hooks/useAuth';
-import ProfileModal from './ProfileModal';
+// import { useAuth } from '../lib/hooks/useAuth';
+// import ProfileModal from './ProfileModal';
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useAuth();
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  // const { user } = useAuth();
+  // const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
-  const toggleProfileModal = () => {
-    setIsProfileModalOpen(!isProfileModalOpen);
-  };
+  // const toggleProfileModal = () => {
+  //   setIsProfileModalOpen(!isProfileModalOpen);
+  // };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
-        setIsProfileModalOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+  //       setIsProfileModalOpen(false);
+  //     }
+  //   };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <header ref={headerRef} className="bg-gray-950 bg-opacity-90 text-white p-4 flex justify-between items-center z-20 text-cyan-500 relative font-bold text-lg sticky top-0">

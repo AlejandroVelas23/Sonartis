@@ -1,12 +1,12 @@
-import React from 'react';
+// import React from 'react';
 
-const Profile: React.FC = () => {
-    return(
-        <>
-            <h1>BIENVENIDO</h1>
-        </>
-    )
-}
+// const Profile: React.FC = () => {
+//     return(
+//         <>
+//             <h1>BIENVENIDO</h1>
+//         </>
+//     )
+// }
 
-export default Profile;
+// export default Profile;
 

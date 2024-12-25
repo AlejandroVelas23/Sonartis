@@ -114,6 +114,7 @@ export const api = {
   getAppointments: async (): Promise<ApiResponse<any[]>> => {
     return fetchApi('/appointments');
   },
+  
 };
 
 export default api;
