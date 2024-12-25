@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch('https://backsonartis.onrender.com/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
