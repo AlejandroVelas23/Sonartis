@@ -78,6 +78,7 @@ interface TranslationResources {
     ctaTitle: string;
     ctaDescription: string;
     ctaButton: string;
+    whatsappMessage: string;
   };
   Architecture: {
     bannerText: string;
@@ -163,7 +164,7 @@ const resources: { [key: string]: { translation: TranslationResources } } = {
           testimonial1: "The quality of the service is exceptional. From customer service to the execution of the project, everything was perfect. We will certainly recommend your services to others.",
           testimonial2: "Thanks to its advanced technological solutions, our company has significantly improved its efficiency. The architecture of our new workspaces is modern and functional - we are very happy with the results!",
           testimonial3: "The personalized nutrition plan you provided has made a huge difference in my life. I feel healthier and full of energy - great job, team!",
-          testimonial4: "The integration of state-of-the-art technology into our architectural project exceeded our expectations. In addition, their nutritional advice has improved our overall well being and we are totally satisfied with their service!"
+          testimonial4: "The integration of state-of-the-art technology into our architectural project exceeded our expectations. In addition, their nutritional advice has improved our overall well being and we are totally satisfied with their service!",
         },
         Footer:{
           about: "About us",
@@ -194,6 +195,7 @@ const resources: { [key: string]: { translation: TranslationResources } } = {
           ctaTitle: "Do you have something in mind?",
           ctaDescription: "Contact us to bring that idea to life or find a solution to the problem",
           ctaButton: "Contact Us",
+          whatsappMessage: "Hello! I would like to know more about your development services.",
         },
         Architecture: {
           bannerText: "Building dreams while helping the planet",
@@ -310,6 +312,7 @@ const resources: { [key: string]: { translation: TranslationResources } } = {
           ctaTitle: "¿Tienes algo en mente?",
           ctaDescription: "Contáctanos para darle vida a esa idea o encontrarle solución al problema",
           ctaButton: "Contáctanos",
+          whatsappMessage: "¡Hola! Me gustaría saber más sobre sus servicios de desarrollo.",
         },
         Architecture: {
           bannerText: "Construimos sueños ayudando al planeta",

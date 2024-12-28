@@ -1,15 +1,18 @@
 import React from "react";
 import Banner from "../../components/Banner";
 import ServiceCard from "../../components/ServiceCard";
-import BD from '../../assets/images/BD.jpg'
-import Button from "../../components/Button";
+import WhatsAppButton from "../../components/WhatsAppButton";
+import BD from '../../assets/images/BD.jpg';
 import { FaMobileAlt } from "react-icons/fa";
 import { FiMonitor, FiShoppingCart, FiServer } from "react-icons/fi";
 import { FaArrowsDownToPeople } from "react-icons/fa6";
 import { useTranslation } from 'react-i18next';
 
 const Development: React.FC = () => {
+  
   const { t } = useTranslation();
+  const whatsappNumber = "+525564057002"; // Replace with your actual WhatsApp number
+  const whatsappMessage = t('Development.whatsappMessage');
   return (
     <div className="min-h-screen bg-gradient-to-t from-gray-700 to-cyan-700 pb-12">
       <Banner 
@@ -53,9 +56,13 @@ const Development: React.FC = () => {
     <p className="text-white text-center mb-6 max-w-2xl">
        {t('Development.ctaDescription')}
     </p>
-    <Button type="submit" className="w-full max-w-md bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-300">
-        {t('Development.ctaButton')}
-    </Button>
+    <WhatsAppButton
+          phoneNumber={whatsappNumber}
+          message={whatsappMessage}
+          className="w-full max-w-md"
+        >
+          {t('Development.ctaButton')}
+        </WhatsAppButton>
   </div>
     </div>
   );
