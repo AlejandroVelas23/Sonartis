@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import CW from "../../assets/images/ContactW.jpg";
 import Btt from "../../components/Button";
@@ -13,7 +13,6 @@ interface FormData {
 
 const Contact: React.FC = () => {
   const { t } = useTranslation();
-
   const [formData, setFormData] = useState<FormData>({
     name: "",
     lastName: "",
@@ -21,33 +20,53 @@ const Contact: React.FC = () => {
     phone: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(t("form.successMessage"));
-    setFormData({
-      name: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://backsonartis.onrender.com/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert(t("form.successMessage"));
+        setFormData({
+          name: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        alert(t("form.errorMessage"));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(t("form.errorMessage"));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-950 flex">
-      {/* Formulario */}
       <div className="w-full md:w-1/3 bg-gray-700 flex flex-col justify-center px-16 p-8 shadow-lg">
         <h1 className="text-4xl font-bold text-white mb-16">
           {t("form.title")}
         </h1>
         <form className="space-y-6" onSubmit={handleSubmit}>
-          {/* Nombre y Apellido */}
           <div className="flex space-x-4">
             <div className="flex flex-col w-1/2">
               <label htmlFor="name" className="text-gray-100 mb-1">
@@ -80,8 +99,6 @@ const Contact: React.FC = () => {
               />
             </div>
           </div>
-
-          {/* Email */}
           <div className="flex flex-col">
             <label htmlFor="email" className="text-gray-300 mb-1">
               {t("form.email")}
@@ -97,8 +114,6 @@ const Contact: React.FC = () => {
               className="p-4 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-800 text-white placeholder-gray-500"
             />
           </div>
-
-          {/* Teléfono */}
           <div className="flex flex-col">
             <label htmlFor="phone" className="text-gray-300 mb-1">
               {t("form.phone")}
@@ -114,7 +129,6 @@ const Contact: React.FC = () => {
               className="p-4 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-800 text-white placeholder-gray-500"
             />
           </div>
-
           <div className="flex flex-col">
             <label htmlFor="message" className="text-gray-300 mb-1">
               {t("form.message")}
@@ -129,11 +143,11 @@ const Contact: React.FC = () => {
               className="p-4 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-800 text-white placeholder-gray-500 h-40"
             ></textarea>
           </div>
-
-          <Btt type="submit" text={t("form.submit")} className="w-full" />
+          <Btt type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? t('enviando') : t('enviar')}
+          </Btt>
         </form>
       </div>
-
       <div className="hidden md:block w-2/3 bg-gray-700 p-8">
         <img
           src={CW}
@@ -146,4 +160,3 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
-
